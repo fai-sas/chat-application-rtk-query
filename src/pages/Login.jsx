@@ -1,8 +1,38 @@
-import { Link } from 'react-router-dom'
+/* eslint-disable no-unused-vars */
+import { Link, useNavigate } from 'react-router-dom'
 import logoImage from '../assets/images/chat-icon.png'
 import Error from '../components/ui/Error'
+import { useEffect, useState } from 'react'
+import { useLoginMutation } from '../features/auth/authAPI'
 
 export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
+  const [login, { data, isLoading, error: responseError }] = useLoginMutation()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    setError('')
+
+    login({
+      email,
+      password,
+    })
+  }
+
+  useEffect(() => {
+    if (responseError?.data) {
+      setError(responseError.data)
+    }
+    if (data?.accessToken && data?.user) {
+      navigate('/inbox')
+    }
+  }, [data, responseError, navigate])
+
   return (
     <div className='grid place-items-center h-screen bg-[#F9FAFB]'>
       <div className='flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8'>
@@ -15,7 +45,7 @@ export default function Login() {
               Sign in to your account
             </h2>
           </div>
-          <form className='mt-8 space-y-6' action='#' method='POST'>
+          <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
             <input type='hidden' name='remember' value='true' />
             <div className='-space-y-px rounded-md shadow-sm'>
               <div>
@@ -27,6 +57,8 @@ export default function Login() {
                   name='email'
                   type='email'
                   autoComplete='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className='relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm'
                   placeholder='Email address'
@@ -41,6 +73,8 @@ export default function Login() {
                   name='password'
                   type='password'
                   autoComplete='current-password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className='relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm'
                   placeholder='Password'
@@ -62,13 +96,14 @@ export default function Login() {
             <div>
               <button
                 type='submit'
+                disabled={isLoading}
                 className='relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md group bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500'
               >
                 Sign in
               </button>
             </div>
 
-            <Error message='There was an error' />
+            {error !== '' && <Error message={error} />}
           </form>
         </div>
       </div>
