@@ -23,6 +23,12 @@
       "password": "$2a$10$x7xoP1sZwdilDsAYPF7m3OyarltftXzUk4AG4R0iMuu6E8JOmrEuy",
       "name": "name",
       "id": 4
+    },
+    {
+      "email": "user100@user.com",
+      "password": "$2a$10$ilVwudwO56G5dH8D56S9WemkZvL7P0lr79sSOUKG4wh9rfxwlXhpu",
+      "name": "John Smith",
+      "id": 5
     }
   ],
   "conversations": [
