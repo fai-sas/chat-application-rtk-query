@@ -1,10 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { Outlet } from 'react-router-dom'
-import Sidebar from '../components/inbox/Sidebar'
+import useAuthCheck from '../hooks/useAuthCheck'
 
 const MainLayout = () => {
-  return (
+  const authChecked = useAuthCheck()
+
+  return !authChecked ? (
+    <h1>Checking Authentication....</h1>
+  ) : (
     <div>
-      {/* <Sidebar /> */}
       <Outlet />
     </div>
   )
