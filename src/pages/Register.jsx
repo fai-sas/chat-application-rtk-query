@@ -43,7 +43,7 @@ export default function Register() {
   }, [data, responseError, navigate])
 
   return (
-    <div className='grid place-items-center h-screen bg-[#F9FAFB'>
+    <div className='grid place-items-center h-screen bg-[#F9FAFB]'>
       <div className='flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8'>
         <div className='w-full max-w-md space-y-8'>
           <div>

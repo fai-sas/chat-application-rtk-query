@@ -6,6 +6,8 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Conversation from '../pages/Conversation'
 import Inbox from '../pages/Inbox'
+import PrivateRoute from '../components/PrivateRoute'
+import PublicRoute from '../components/PublicRoute'
 
 const Route = createBrowserRouter([
   {
@@ -14,19 +16,35 @@ const Route = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: 'register',
-        element: <Register />,
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
       },
       {
         path: 'inbox',
-        element: <Conversation />,
+        element: (
+          // <PrivateRoute>
+          <Conversation />
+          // </PrivateRoute>
+        ),
       },
       {
         path: 'inbox/:id',
-        element: <Inbox />,
+        element: (
+          // <PrivateRoute>
+          <Inbox />
+          // </PrivateRoute>
+        ),
       },
     ],
   },
