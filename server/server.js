@@ -1,6 +1,8 @@
 const auth = require('json-server-auth')
 const jsonServer = require('json-server')
 
+require('dotenv').config()
+
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
